@@ -23,7 +23,8 @@
         http://xmlns.jcp.org/xml/ns/javaee
         http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd">
 
-    <lifecycle>
+  <!--  <lifecycle>
         <phase-listener>com.listener.LifeCycleListener</phase-listener>
-    </lifecycle>
+    </lifecycle>  -->
+
 </faces-config>

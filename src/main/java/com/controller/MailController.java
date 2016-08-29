@@ -1,11 +1,14 @@
 package com.controller;
 
 import com.service.SendMailTLS;
+import com.service.TimerForSendingMails;
 
 import javax.enterprise.inject.Model;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
+import java.util.Date;
+import java.util.Timer;
 
 /**
  * Created by szkolenie on 2016-08-26.
@@ -21,17 +24,30 @@ public class MailController {
 
     public void sendMails() throws Exception{
         try{
-            System.out.println("MemberController.sendMails()");
+          //  System.out.println("MemberController.sendMails()");       //Info where am I...
             sendMailTLS.prepareMailService();
             FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_INFO, "Messages sent!", "Gratz");
             facesContext.addMessage(null, m);
         }
         catch (Exception ex){
             String errorMessage = ex.getMessage();
-            FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_ERROR, errorMessage, "Niepowodzenie");
+            FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_ERROR, errorMessage, "Sending unsuccesful.");
             facesContext.addMessage(null, m);
         }
 
+    }
+
+    public void sendMailsAtParticularDate(Date date){
+      //  System.out.println("MailController");     //Info where am I...
+        //Now create the time and schedule it
+        Timer timer = new Timer();
+
+        //Use this if you want to execute it once
+        timer.schedule(new TimerForSendingMails(), date);
+
+        //Use this if you want to execute it repeatedly
+        //int period = 10000;//10secs
+        //timer.schedule(new MyTimeTask(), date, period);
     }
 
 }

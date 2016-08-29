@@ -42,15 +42,12 @@
 
 
                 <p:outputLabel for="inline" value="Date of sending:" />
-                <p:calendar id="inline" value="#{callendarView.date}" mode="inline" />
-
-
-                <h:outputLabel for="hours" value="Hour:" />
-                <h:inputText id="hours" value="#{newDate.hourOfMailDispatch}" converter="javax.faces.Integer"/>
-                <h:message for="hours" errorClass="invalid" />
+                <p:calendar id="inline" value="#{dateController.date}" pattern="dd-MM-yyyy HH:mm" mode="popup" >
+                        </p:calendar>
+                <p:message for="inline" />
 
             </h:panelGrid>
-            <h:commandButton value="Set time" type="submit" action="#{callendarView.click}" />
+            <h:commandButton value="Set time" type="submit" action="#{dateController.setDateForMailSend}" />
         </h:form>
         <br/>
 
