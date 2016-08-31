@@ -38,7 +38,7 @@ public class MailController {
     }
 
     public void sendMailsAtParticularDate(Date date){
-      //  System.out.println("MailController");     //Info where am I...
+      //  System.out.println("MailController.sendMailsAtParticularDate(" + date + ")");     //Info where am I...
         //Now create the time and schedule it
         Timer timer = new Timer();
 

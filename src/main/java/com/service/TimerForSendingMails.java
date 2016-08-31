@@ -13,11 +13,15 @@ import java.util.Timer;
 @Stateless
 public class TimerForSendingMails extends TimerTask{
 
-    @Inject
-    SendMailTLS sendMailTLS;
+    private SendMailTLS sendMailTLS = new SendMailTLS();
 
     @Override
     public void run() {
-        sendMailTLS.prepareMailService();
+        try {
+            sendMailTLS.prepareMailService();
+        }
+        catch (Exception ex){
+            System.out.println(ex.getMessage() + ex.getLocalizedMessage() + ex.getCause());
+        }
     }
 }

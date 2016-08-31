@@ -42,6 +42,7 @@ public class SendMailTLS {
                 });
 
         collectMails(session);             //After set up start sending mails
+        //System.out.println("Email service prepared!");
     }
 
     private void collectMails(Session session) {
