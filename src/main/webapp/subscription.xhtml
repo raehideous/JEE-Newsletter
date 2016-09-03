@@ -9,29 +9,29 @@
 
     <ui:define name="content">
 
-<h:form id="reg">
+<h:form id="subscribeForm">
     <h2>Member Registration</h2>
     <p>Enforces annotation-based constraints defined on the
         model class.</p>
     <h:panelGrid columns="3" columnClasses="titleCell">
         <h:outputLabel for="name" value="Name:" />
-        <h:inputText id="name" value="#{newMember.name}" />
+        <h:inputText id="name" value="#{newSubscriber.name}" />
         <h:message for="name" errorClass="invalid" />
 
         <h:outputLabel for="email" value="Email:" />
-        <h:inputText id="email" value="#{newMember.email}" />
+        <h:inputText id="email" value="#{newSubscriber.email}" />
         <h:message for="email" errorClass="invalid" />
 
         <h:outputLabel for="phoneNumber" value="Phone #:" />
         <h:inputText id="phoneNumber"
-                     value="#{newMember.phoneNumber}" />
+                     value="#{newSubscriber.phoneNumber}" />
         <h:message for="phoneNumber" errorClass="invalid" />
     </h:panelGrid>
 
     <p>
         <h:panelGrid columns="2">
             <h:commandButton id="register"
-                             action="#{memberController.register}"
+                             action="#{subscriberController.subscribe}"
                              value="Register" styleClass="register" />
             <h:messages styleClass="messages"
                         errorClass="invalid" infoClass="valid"

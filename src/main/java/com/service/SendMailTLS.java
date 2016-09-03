@@ -1,7 +1,7 @@
 package com.service;
 
-import com.data.MemberRepository;
-import com.model.Member;
+import com.data.SubscriberRepository;
+import com.model.Subscriber;
 
 import java.util.List;
 import java.util.Properties;
@@ -22,7 +22,7 @@ import javax.mail.internet.MimeMessage;
 public class SendMailTLS {
 
     @Inject
-    private MemberRepository repository;
+    private SubscriberRepository repository;
 
     public void prepareMailService(){
         final String username = "a69290b918729a87d0f1cff9b01990@gmail.com";
@@ -42,16 +42,17 @@ public class SendMailTLS {
                 });
 
         collectMails(session);             //After set up start sending mails
+        //System.out.println("Email service prepared!");
     }
 
     private void collectMails(Session session) {
-        Long membersNumber = repository.getMembersNumber();
-        List<Member> members = repository.findAllOrderedByName();
+        Long membersNumber = repository.getSubscribersNumber();
+        List<Subscriber> subscribers = repository.findAllOrderedByName();
 
         for(int i = 0; i < membersNumber; i++){
-            System.out.println("Sending to: " + members.get(i).getEmail());
-            System.out.println("Member " + i + " of " + members.size());
-            sendMail(members.get(i).getEmail(), session);
+            System.out.println("Sending to: " + subscribers.get(i).getEmail());
+            System.out.println("Subscriber " + i + " of " + subscribers.size());
+            sendMail(subscribers.get(i).getEmail(), session);
         }
     }
 

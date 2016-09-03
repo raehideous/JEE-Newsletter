@@ -24,7 +24,7 @@ public class MailController {
 
     public void sendMails() throws Exception{
         try{
-          //  System.out.println("MemberController.sendMails()");       //Info where am I...
+          //  System.out.println("SubscriberController.sendMails()");       //Info where am I...
             sendMailTLS.prepareMailService();
             FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_INFO, "Messages sent!", "Gratz");
             facesContext.addMessage(null, m);
@@ -38,7 +38,7 @@ public class MailController {
     }
 
     public void sendMailsAtParticularDate(Date date){
-      //  System.out.println("MailController");     //Info where am I...
+      //  System.out.println("MailController.sendMailsAtParticularDate(" + date + ")");     //Info where am I...
         //Now create the time and schedule it
         Timer timer = new Timer();
 
