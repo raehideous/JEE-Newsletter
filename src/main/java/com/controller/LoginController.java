@@ -11,6 +11,7 @@ import org.apache.shiro.web.util.WebUtils;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.RequestScoped;
+import javax.faces.component.UIComponent;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
@@ -50,6 +51,7 @@ public class LoginController {
     public void setPassword(String password) {
         this.password = password;
     }
+
 
     /**
      * Method is String type for redirecting to index.xhtml page if user has correctly logged in.

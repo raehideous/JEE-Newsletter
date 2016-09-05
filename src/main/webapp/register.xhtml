@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                template="/WEB-INF/templates/default.xhtml" >
+
+
+    <ui:define name="content">
+        <h2> <h:messages styleClass="messages"
+                         errorClass="invalid" infoClass="valid"
+                         warnClass="warning" globalOnly="true" />
+        </h2>
+
+        <h:form id="reg">
+            <h2>New user? Register!</h2>
+
+            <h:panelGrid columns="3" columnClasses="titleCell">
+                <h:outputLabel for="usernameRegister" value="Username:" />
+                <h:inputText id="usernameRegister" value="#{userRegistrationController.user.username}" />
+                <h:message for="usernameRegister" errorClass="invalid" />
+
+                <h:outputLabel for="email2" value="Email:" />
+                <h:inputText id="email2" value="#{userRegistrationController.user.email}" />
+                <h:message for="email2" errorClass="invalid" />
+
+                <h:outputLabel for="passwordRegister" value="Password:" />
+                <h:inputSecret id="passwordRegister" value="#{userRegistrationController.user.password}" />
+                <h:message for="passwordRegister" errorClass="invalid" />
+
+                <h:outputLabel for="passwordRegister2" value="Repeat password:" />
+                <h:inputSecret id="passwordRegister2" value="#{userRegistrationController.testPassword}" />
+                <h:message for="passwordRegister" errorClass="invalid" />
+
+            </h:panelGrid>
+
+            <p>
+                <h:panelGrid columns="2">
+                    <h:commandButton id="register"
+                                     action="#{userRegistrationController.submit}"
+                                     value="Register" styleClass="register" />
+
+                    <h:button value="Log in" outcome="login" />
+                </h:panelGrid>
+            </p>
+        </h:form>
+    </ui:define>
+</ui:composition>

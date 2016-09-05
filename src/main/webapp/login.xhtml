@@ -8,7 +8,10 @@
 
 
     <ui:define name="content">
-
+        <h2> <h:messages styleClass="messages"
+                    errorClass="invalid" infoClass="valid"
+                    warnClass="warning" globalOnly="true" />
+        </h2>
         <h2>Login</h2>
         <h:form id="loginForm" method="post">
             <h:outputLabel for="username">Username:</h:outputLabel>
@@ -29,47 +32,11 @@
             <br/>
             <h:commandButton type="submit" value="Login" action="#{loginController.submitLogin}"/>
             <span class="error">#{shiroLoginFailure}</span>
-            <h:messages styleClass="messages"
-                        errorClass="invalid" infoClass="valid"
-                        warnClass="error" globalOnly="true" />
+
+            <h:button value="Register" outcome="register" />
         </h:form>
 
-        <h:form id="reg">
-            <h2>New user? Register!</h2>
 
-            <h:panelGrid columns="3" columnClasses="titleCell">
-                <h:outputLabel for="usernameRegister" value="Username:" />
-                <h:inputText id="usernameRegister" value="#{newSubject.username}" />
-                <h:message for="usernameRegister" errorClass="invalid" />
 
-                <h:outputLabel for="email" value="Email:" />
-                <h:inputText id="email" value="#{newSubject.email}" />
-                <h:message for="email" errorClass="invalid" />
-
-                <h:outputLabel for="passwordRegister" value="Password:" />
-                <h:inputText id="passwordRegister" value="#{newSubject.password}" />
-                <h:message for="passwordRegister" errorClass="invalid" />
-
-                <h:outputLabel for="passwordRegister2" value="Repeat password:" />
-                <h:inputText id="passwordRegister2" value="#{newSubject.password2}" />
-                <h:message for="passwordRegister" errorClass="invalid" />
-
-                <h:outputLabel for="phoneNumber" value="Phone #:" />
-                <h:inputText id="phoneNumber"
-                             value="#{newSubscriber.phoneNumber}" />
-                <h:message for="phoneNumber" errorClass="invalid" />
-            </h:panelGrid>
-
-            <p>
-                <h:panelGrid columns="2">
-                    <h:commandButton id="register"
-                                     action="#{subjectController.register}"
-                                     value="Register" styleClass="register" />
-                    <h:messages styleClass="messages"
-                                errorClass="invalid" infoClass="valid"
-                                warnClass="warning" globalOnly="true" />
-                </h:panelGrid>
-            </p>
-        </h:form>
     </ui:define>
 </ui:composition>

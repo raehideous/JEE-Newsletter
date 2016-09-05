@@ -1,6 +1,8 @@
 package com.controller;
 
 
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authz.AuthorizationException;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.SelectEvent;
 
@@ -51,10 +53,15 @@ public class DateController {
 
     public void setDateForMailSend(){
         try{
+            SecurityUtils.getSubject().checkRole("ADMIN");
           //  System.out.println("Chosen date: " + date);
             mailController.sendMailsAtParticularDate(date);
 
 
+        }
+        catch (AuthorizationException authEx){
+            FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_ERROR, "You're not admin!", "Only admin can send mails.");
+            facesContext.addMessage(null, m);
         }
         catch (Exception ex){
             String errorMessage = ex.getMessage();
