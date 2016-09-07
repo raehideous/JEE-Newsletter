@@ -1,12 +1,18 @@
 package com.service;
 
 import com.data.SubscriberRepository;
+import com.data.UserRepository;
 import com.model.Subscriber;
+import com.model.User;
+import com.util.InconsistientEmailsException;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 
 import javax.ejb.Stateless;
 import javax.enterprise.event.Event;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+
 import java.util.logging.Logger;
 
 /**
@@ -25,14 +31,33 @@ public class SubscriberUnsubscribe {
     private Event<Subscriber> memberEventSrc;
 
     @Inject
-    private SubscriberRepository repository;
+    private SubscriberRepository subscriberRepository;
+
+    @Inject
+    private UserRepository userRepository;
 
     public void unsubscribe(String email) throws Exception {
-        Subscriber subscriber = repository.findByEmail(email);
+
+        Subject currentSubject = SecurityUtils.getSubject();
+        String username = (String) currentSubject.getPrincipal();
+        User currentUser = userRepository.findUserByUsername(username);
+
+        //System.out.println("KURRENT USER XD: " + currentUser.getEmail());
+
+
+        Subscriber subscriber = subscriberRepository.findByEmail(email);
+
         Subscriber subscriberToDelete = em.find(Subscriber.class, subscriber.getId());
 
-        em.remove(subscriberToDelete);
-        em.flush();
+
+        if(currentUser.getEmail().equals(subscriber.getEmail())){
+            em.remove(subscriberToDelete);
+            em.flush();
+        }
+        else{
+            throw new InconsistientEmailsException("You written someone else email! Write yours...");
+        }
+
     }
 
 }

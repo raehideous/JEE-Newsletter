@@ -24,10 +24,12 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.persistence.NoResultException;
 
 import com.model.Subscriber;
 import com.service.SubscriberSubscribe;
 import com.service.SubscriberUnsubscribe;
+import com.util.InconsistientEmailsException;
 
 // The @Model stereotype is a convenience mechanism to make this a request-scoped bean that has an
 // EL name
@@ -54,6 +56,16 @@ public class SubscriberController {
         newSubscriber = new Subscriber();
     }
 
+    private String email;
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public void subscribe() throws Exception {
         try {
             subscriberSubscribe.register(newSubscriber);
@@ -69,13 +81,17 @@ public class SubscriberController {
 
     public void unsubscribe() throws Exception{
         try{
-            ExternalContext ex = FacesContext.getCurrentInstance().getExternalContext();
-            String email = ex.getRequestParameterMap().get("unsubForm:email");
+            System.out.println(email);
             subscriberUnsubscribe.unsubscribe(email);
+            FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Unsubscribed!", "Unsubscribe successful");
+            facesContext.addMessage(null, m);
+        }
+        catch(InconsistientEmailsException ex){
+            FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_ERROR, ex.getMessage(), "Unsubscribe unsuccessful");
+            facesContext.addMessage(null, m);
         }
         catch (Exception e){
-            String errorMessage = getRootErrorMessage(e);
-            FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_ERROR, errorMessage, "Unsubscribe unsuccessful");
+            FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_ERROR, "No such mail found.", "Unsubscribe unsuccessful");
             facesContext.addMessage(null, m);
         }
     }
@@ -100,5 +116,6 @@ public class SubscriberController {
         // This is the root cause message
         return errorMessage;
     }
+
 
 }

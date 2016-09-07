@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    JBoss, Home of Professional Open Source
+    Copyright 2013, Red Hat, Inc. and/or its affiliates, and individual
+    contributors by the @authors tag. See the copyright.txt in the
+    distribution for a full listing of individual contributors.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+    http://www.apache.org/licenses/LICENSE-2.0
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:p="http://primefaces.org/ui"
+    template="/WEB-INF/templates/default.xhtml">
+    <ui:define name="content">
+        <h1>Welcome to WildFly!</h1>
+
+        <h:form>
+            <h:commandButton value="Logout" type="submit" action="#{loginController.logout}" />
+        </h:form>
+
+        <div>
+            <p>You have successfully deployed a Java EE 7 Enterprise
+                Application.</p>
+           <h2>
+            <h:messages styleClass="messages"
+                        errorClass="invalid" infoClass="valid"
+                        warnClass="warning" globalOnly="true" />
+            </h2>
+            <h3>Your application can run on:</h3>
+            <img src="../resources/gfx/wildfly_400x130.jpg" />
+        </div>
+
+        <h2>Subscribe for newsletter!</h2>
+        <h:button value="Subscribe!" outcome="subscription"/>
+        <br/>
+
+
+        <h:form id="dateForm">
+            <h2>When send mails?</h2>
+            <h:panelGrid columns="3" columnClasses="titleCell">
+
+
+                <p:outputLabel for="inline" value="Date of sending:" />
+                <p:calendar id="inline" value="#{dateController.date}" pattern="dd-MM-yyyy HH:mm" mode="popup" >
+                        </p:calendar>
+                <p:message for="inline" />
+
+            </h:panelGrid>
+            <h:commandButton value="Set time" type="submit" action="#{dateController.setDateForMailSend}" />
+        </h:form>
+        <br/>
+
+        <h2>Send test mails!</h2>
+        <h:form>
+            <h:commandButton value="Send mails" type="submit" action="#{mailController.sendMails}" />
+        </h:form>
+        <br/>
+
+        <h2>Subscribers:</h2>
+        <h:panelGroup rendered="#{empty subscribers}">
+            <em>No registered subscribers.</em>
+        </h:panelGroup>
+        <h:dataTable var="_subscriber" value="#{subscribers}"
+            rendered="#{not empty subscribers}"
+            styleClass="simpletablestyle">
+            <h:column>
+                <f:facet name="header">Id</f:facet>
+                #{_subscriber.id}
+            </h:column>
+            <h:column>
+                <f:facet name="header">Name</f:facet>
+                #{_subscriber.name}
+            </h:column>
+            <h:column>
+                <f:facet name="header">Email</f:facet>
+                #{_subscriber.email}
+            </h:column>
+            <h:column>
+                <f:facet name="header">Phone #</f:facet>
+                #{_subscriber.phoneNumber}
+            </h:column>
+            <h:column>
+                <f:facet name="header">REST URL</f:facet>
+                <a
+                    href="#{request.contextPath}/rest/subscribers/#{_subscriber.id}">/rest/subscribers/#{_subscriber.id}</a>
+            </h:column>
+            <f:facet name="footer">
+            REST URL for all subscribers: <a
+                    href="#{request.contextPath}/rest/subscribers">/rest/subscribers</a>
+            </f:facet>
+        </h:dataTable>
+
+        <h:button value="Unsubscribe" outcome="unsubscription" />
+    </ui:define>
+</ui:composition>

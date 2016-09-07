@@ -16,8 +16,8 @@
             <h2>Member unsubscription</h2>
 
             <h:panelGrid columns="1" columnClasses="titleCell">
-                <h:outputLabel for="email" value="Name:" />
-                <h:inputText id="email"  />
+                <h:outputLabel for="email" value="Email:" />
+                <h:inputText id="email" value="#{subscriberController.email}" />
                 <h:message for="email" errorClass="invalid" />
 
 

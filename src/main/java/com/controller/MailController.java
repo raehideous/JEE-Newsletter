@@ -50,6 +50,8 @@ public class MailController {
     public void sendMailsAtParticularDate(Date date){
             //  System.out.println("MailController.sendMailsAtParticularDate(" + date + ")");     //Info where am I...
             //Now create the time and schedule it
+        try {
+            SecurityUtils.getSubject().checkRole("ADMIN");
             Timer timer = new Timer();
 
             //Use this if you want to execute it once
@@ -58,6 +60,12 @@ public class MailController {
             //Use this if you want to execute it repeatedly
             //int period = 10000;//10secs
             //timer.schedule(new MyTimeTask(), date, period);
+        }
+        catch (AuthorizationException authEx){
+            System.out.println("NIE USTAWWILEM TIMERA, NIE JESTES ADMINEM");
+            FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_ERROR, "You're not admin!", "Only admin can send mails.");
+            facesContext.addMessage(null, m);
+        }
     }
 
 }
